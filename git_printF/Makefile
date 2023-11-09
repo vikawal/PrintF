@@ -8,26 +8,23 @@ ft_printf.c
 
 
 OBJS = $(SRCS:.c=.o)
+LIBFT_PATH = ./LIBFT
+LIBFT = $(LIBFT_PATH)/libft.a
 
-LIBFT = ./LIBFT
 
-.c.o:
-	cc ${FLAGS} -c $< -o ${<:.c=.o}
-
-all: $(NAME) $(LIBFT)
+all: $(NAME)
 
 $(NAME): $(OBJS) $(LIBFT)
-	$(MAKE) -C $(LIBFT)
-	cp $(LIBFT)/libft.a $(NAME)
+	cp $(LIBFT) $(NAME)
 	ar rcs $(NAME) $(OBJS)
+$(LIBFT):
+	$(MAKE) -C $(LIBFT_PATH)
 
 clean: 
 	rm -f $(OBJS)
-	$(MAKE) -C $(LIBFT) clean
 
 fclean: clean
 	rm -f $(NAME)
-	$(MAKE) -C $(LIBFT) fclean
 
 re: fclean all
 
